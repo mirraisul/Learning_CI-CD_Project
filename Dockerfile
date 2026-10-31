@@ -1,13 +1,21 @@
-FROM python:3.12-slim
+# Use an official Python runtime as a parent image
+FROM python:3.11-slim-buster
 
+# Set the working directory to /app
 WORKDIR /app
 
+# Copy the requirements file into the container at /app
 COPY requirements.txt .
 
+# Install the required packages
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-EXPOSE 8000
+# Expose port 3000 for the FastAPI web API
+EXPOSE 3000
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# Start the FastAPI app using uvicorn
+CMD ["python", "app.py"]
+
